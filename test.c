@@ -25,7 +25,7 @@
 int main()
 {
 	//向内存申请10个整形空间
-	int *p = (int*)malloc(LLONG_MAX);
+	int *p = (int*)malloc(10 * sizeof(int));
 	if (p == NULL)
 	{
 		//打印错误原因的一个方式
@@ -44,5 +44,8 @@ int main()
 			printf("%d ", *(p + i));
 		}
 	}
+	//当动态申请的空间不再使用时，释放空间，还个操作系统
+	free(p);//p指向的空间释放了，但是还是指着原来的位置
+	p = NULL;
 	return 0;
 }
