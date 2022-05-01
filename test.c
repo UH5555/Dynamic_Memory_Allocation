@@ -5,6 +5,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <limits.h>
+#include <Windows.h>
 
 //struct S
 //{
@@ -112,43 +113,127 @@
 //	return 0;
 //}
 
-int main()
-{
-	////1.对NULL进行解引用操作
-	//int* p = (int*)malloc(40);
-	////万一malloc失败了，p就被赋值为NULL
-	//int i = 0;
-	//for (i = 0; i < 10; i++)
-	//{
-	//	*(p + i) = i;
-	//}
-	//free(p);
-	//p = NULL;
+//int main()
+//{
+//	////1.对NULL进行解引用操作
+//	//int* p = (int*)malloc(40);
+//	////万一malloc失败了，p就被赋值为NULL
+//	//int i = 0;
+//	//for (i = 0; i < 10; i++)
+//	//{
+//	//	*(p + i) = i;
+//	//}
+//	//free(p);
+//	//p = NULL;
+//
+//	////2.对动态开辟的空间越界访问
+//	//int* p = (int*)malloc(5 * sizeof(int));
+//	//if (p == NULL)
+//	//{
+//	//	return 0;
+//	//}
+//	//else
+//	//{
+//	//	int i = 0;
+//	//	for (i = 0; i < 10; i++)
+//	//	{
+//	//		*(p + i) = i;
+//	//	}
+//	//}
+//	////
+//	//free(p);
+//	//p = NULL;
+//
+//	////3.对非动态开辟内存的free
+//	//int a = 10;
+//	//int* p = &a;
+//	//*p = 20;
+//	//free(p);
+//	//p = NULL;
+//
+//	////4.使用free释放动态开辟内存的一部分
+//	//int* p = (int*)malloc(40);
+//	//if (p == NULL)
+//	//{
+//	//	return 0;
+//	//}
+//	//else
+//	//{
+//	//	int i = 0;
+//	//	for (i = 0; i < 10; i++)
+//	//	{
+//	//		*p++ = i;
+//	//	}
+//	//}
+//	//free(p);
+//	//p = NULL;
+//
+//	////5.对同一块动态内存多次释放
+//	//int* p = (int*)malloc(40);
+//	//if (p == NULL)
+//	//{
+//	//	return 0;
+//	//}
+//	////使用
+//	////释放
+//	//free(p);
+//	////p = NULL;
+//	////......
+//	//free(p);
+//
+//	////6.对动态开辟内存忘记释放（内存泄露）
+//	//while (1)
+//	//{
+//	//	malloc(1);
+//	//	Sleep(1000);
+//	//}
+//
+//	return 0;
+//}
 
-	////2.对动态开辟的空间越界访问
-	//int* p = (int*)malloc(5 * sizeof(int));
-	//if (p == NULL)
-	//{
-	//	return 0;
-	//}
-	//else
-	//{
-	//	int i = 0;
-	//	for (i = 0; i < 10; i++)
-	//	{
-	//		*(p + i) = i;
-	//	}
-	//}
-	////
-	//free(p);
-	//p = NULL;
+//int main()
+//{
+//	int* p = realloc(NULL, 40);//malloc(40)
+//	return 0;
+//}
 
-	////3.对非动态开辟内存的free
-	//int a = 10;
-	//int* p = &a;
-	//*p = 20;
-	//free(p);
-	//p = NULL;
+//void GetMemory(char* p)
+//{
+//	p = (char*)malloc(100);
+//}
+//void Test(void)
+//{
+//	char* str = NULL;
+//	GetMemory(str);
+//	strcpy(str, "hello world");
+//	printf(str);
+//}
+////1.运行代码程序会出现崩溃的现象
+////2.程序存在内存泄露的问题
+////str以值的形式给p，p是GetMemory函数的形参，只能函数内部有效。
+////等GetMemory函数返回之后，动态开辟内存尚未释放并且无法找到，所有会内存泄露
+//
+//int main()
+//{
+//	Test();
+//	return 0;
+//}
 
-	return 0;
-}
+//void GetMemory(char** p)
+//{
+//	*p = (char*)malloc(100);
+//}
+//void Test(void)
+//{
+//	char* str = NULL;
+//	GetMemory(&str);
+//	strcpy(str, "hello world");
+//	printf(str);
+//	free(str);
+//	str = NULL;
+//}
+//int main()
+//{
+//	Test();
+//	return 0;
+//}
