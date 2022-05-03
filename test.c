@@ -237,3 +237,69 @@
 //	Test();
 //	return 0;
 //}
+
+////返回栈空间的地址的问题
+//char* GetMemory(void)
+//{
+//	char p[] = "hello world";//函数内部局部变量，出函数时P的值就被销毁
+//	return p;
+//}
+//void Test(void)
+//{
+//	char* str = NULL;
+//	str = GetMemory();
+//	printf(str);
+//}
+//
+//int* test()
+//{
+//	//int a = 10;//栈区 - error
+//	static int a = 10;//静态区
+//	return &a;
+//}
+//
+//int* test2()
+//{
+//	int* ptr = malloc(100);//堆区
+//	return ptr;
+//}
+//int main()
+//{
+//	Test();
+//	test();
+//	int* a = test2();
+//	return 0;
+//}
+
+//void GetMemory(char** p, int num)
+//{
+//	*p = (char*)malloc(num);
+//}
+//void Test(void)
+//{
+//	char* str = NULL;
+//	GetMemory(&str, 100);
+//	strcpy(str, "hello");
+//	printf(str);
+//	//未释放动态内存开辟的空间，会出现内存泄露。
+//}
+
+void Test(void)
+{
+	char* str = (char*)malloc(100);
+	strcpy(str, "hello");
+	free(str);//free释放str指向的空间后，并不会把str置为NULL;
+	//str = NULL;
+	if (str != NULL)
+	{
+		strcpy(str, "world");
+		printf(str);
+	}
+	//非法访问内存
+}
+
+int main()
+{
+	Test();
+	return 0;
+}
